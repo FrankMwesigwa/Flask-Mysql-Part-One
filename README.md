@@ -88,6 +88,28 @@ we can also use if else statements in jinja2 templates
     <title> Flask App </title>
   {% endif %}
 
+Template Inheritance
+Its always better to have every thing that is repeated in a single place so that there is only one place to make changes . we can achieve this using template heritance 
+
+create a new html file called layout.html and pick out all the repeated stuff from other html files. The only thing that is different is the body section from all files.
+
+  {% block content %}
+  {% endblock %}
+
+  {% extends "layout.html" %}
+    {% block content %}
+        {% for post in posts %}
+            <h1>{{ post.title }}</h1>
+            <p>By {{ post.author }} on {{ post.date_posted }}</p>
+            <p>{{ post.content }}</p>
+        {% endfor %}
+    {% endblock content %}
+
+Bootstrap is a nice library that makes it very easy to add nice styles to our website 
+you might also want to use the flask-bootstarp library if you are interested in it
+
+url_for
+for links we shall be using the url_for provided by the flask library 
 
 
 
