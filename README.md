@@ -138,9 +138,82 @@ Lets now create our 2 template files register.html and login.html
 we use flash to send alerts to the screens. first import it from flash
     flash(f'Account created for {form.username.data}!', 'success')
 
+### Database with Flask-SQLAlchemy
+In python we shall be using SQLAlchemy which is a popular ORM . ORM stands for object relation mapper. it allows us to access our database in an object oriented way and you can use diffirent databases without changing your python code.
 
+First we need to install the flask-sqlalchemy
+pip install flask-sqlalchemy
 
+Now import the sqlalchemy package into our application in the run.py file 
+After importing package we need to specify the URL of where the database is located
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://farmprod:Master123@127.0.0.1/farmprod'
 
+After creating the database path we now need to create a database instance and pass in app as an argument
+    db = SQLAlchemy(app)
+
+In sqlalchemy we can represent our database structure as class models. Each class is going to be its own table in the database
+
+we create the class and import from db.Model
+    class User(db.Model)
+
+This is a redadant method or a special method which is a represenation of how our class will look like when printed out.
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+The backref adds other column to our model
+
+Open Command Prompt
+type python
+>>> from agrosave import db
+db.create_all() -- this will create our database in mysql
+admin = User(username='admin', email='admin@code.com', password='admin@123')
+frank = User(username='frank', email='frank@code.com', password='frank@123')
+emma = User(username='emma', email='emma@code.com', password='emma@123')
+
+db.session_add(admin)
+db.session_add(frank)
+db.session_add(emma)
+
+db.session_commit() // here we are saving the data in the database
+
+To get all users in the database we run command below
+    user.query.all()
+
+To get the first user from the list run command below
+    user.query.first()
+
+To fliter we use the command below
+    user.query.filter_by(username='frank').all()
+    user.query.filter_by(username='frank').first()
+    user = user.query.filter_by(username='frank').first()
+
+To get a user with a specific id
+    user = user.query.get(1)
+
+To get the user's post
+    user.post
+
+Lets add posts to our database
+    post1 = Post(title='Killer',content='This is how we do it here in londan', user_id='user.id')
+    post2 = Post(title='Killer',content='This is how we do it here in londan', user_id='user.id')
+    post3 = Post(title='Killer',content='This is how we do it here in londan', user_id='user.id')
+
+    db.session.add(post1)
+    db.session.add(post2)
+    db.session.add(post3)
+
+    db.session.commit()
+
+    user.posts
+
+    for post in user.posts:
+        print(post.title)
+    
+    post = Post.query.first() -- this will query and return the first post
+    post.user_id
+    post.author
+
+    db.drop.all()
 
 
 
