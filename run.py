@@ -1,14 +1,31 @@
-from flask import Flask # here we are importing the Flask class from the flask package 
+from flask import Flask , render_template
 
-app = Flask(__name__) # here we are creating the app variable and setting it to an instance of the Flask class                            and passing in a special variable name in python which is just the name of the module
+app = Flask(__name__)
 
-@app.route("/") # here we are creating our routes. routes are what we type in our browser to go to different pages
+#lets use some dummy data here since we dont have a databse yet
+posts = [
+    {
+        'author': 'Frank Mwesigwa',
+        'title': 'Learning Flask',
+        'content': 'Flask is awseome and doing so well in programming',
+        'date_posted': 'January 27, 2019'
+    },
+    {
+        'author': 'Deus Abigaba',
+        'title': 'Emmanuel Ninja',
+        'content': 'Video Games conferencing with Ninja man',
+        'date_posted': 'January 27, 2019'
+    }
+]
+
+@app.route("/")
 def hello():
-    return "<h1>Home Page !!</h1>"
+    return render_template('home.html', posts=posts)
 
 @app.route("/about") 
 def about():
-    return "<h1>About us Page !!</h1>"
+    return render_template('about.html', title='About')
 
 if __name__ == '__main__':
     app.run(debug='True')
+

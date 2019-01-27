@@ -1,6 +1,6 @@
 In this series of lessons we will be learning how to build a Fully Featured web application using the Flask framework and python. Flask is a microframework that makes it very enjoyable to work with these backend applications.
 
-Lets get started learning how to use Flask
+Part One : Setting up a Flask application
 
 we start off by installing the packages that we shall be using in our application. its always a good idea to seperate different projects in their own virtual environments
 
@@ -41,6 +41,60 @@ if __name__ == '__main__':
 
 To start the development server execute command below on command prompt:
 python run.py
+
+Part Two: Using Templates
+
+create a new folder called templates. inside the templates folder create home.html and about.html files
+we use the render_template method in flask package to use html templates in flask
+
+#lets use some dummy data here since we dont have a databse yet
+posts = [
+    {
+        'author': 'Frank Mwesigwa',
+        'title': 'Learning Flask',
+        'content': 'Flask is awseome and doing so well in programming',
+        'date_posted': 'January 27, 2019'
+    },
+    {
+        'author': 'Deus Abigaba',
+        'title': 'Emmanuel Ninja',
+        'content': 'Video Games conferencing with Ninja man',
+        'date_posted': 'January 27, 2019'
+    }
+]
+
+we can pass the posts call within our render_template
+@app.route("/")
+def hello():
+    return render_template('home.html' , posts=posts)
+
+Flask uses a templating engine called Jinja2 and it allows us to write code within our template. This is how a code block is written in jinja2
+  {% %}
+  {% %}
+
+a variable in jinja2 has got 2 cury braces
+  {{}}
+
+  {% for post in posts %}
+    <h1>{{ post.title }}</h1>
+    <p>By {{ post.author }} on {{ post.date_posted }}</p>
+    <p>{{ post.content }}</p>
+  {% endfor %}
+
+we can also use if else statements in jinja2 templates
+  {% if title %}
+    <title> Flask App - {{ title }} </title>
+  {% else %}
+    <title> Flask App </title>
+  {% endif %}
+
+
+
+
+
+
+
+
 
 
 
