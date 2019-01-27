@@ -111,6 +111,50 @@ you might also want to use the flask-bootstarp library if you are interested in 
 url_for
 for links we shall be using the url_for provided by the flask library 
 
+Creating Forms and Validation
+we shall use a flask extension for working with forms in flask. its called flask-wtf
+pip install flask-wtf
+
+lets create a file where we can put these files called forms.py 
+we create class forms in flask and these inherit from the FlaskForm
+
+from flask_wtf import FlaskForm
+
+class RegistrationForm(FlaskForm):
+
+when working with forms we need to set a secret key for our application. This will help us in avoiding cross-siting validations
+
+In our routes we need to create instance of our forms e.g
+ form = RegistrationForm()
+
+In the render_template we pass in the form object so that our objects can have that instance 
+    @app.route("/login") 
+    def login():
+        form = LoginForm()
+        return render_template('login.html', title='Login', form=form)
+
+Lets now create our 2 template files register.html and login.html
+
+we use flash to send alerts to the screens. first import it from flash
+    flash(f'Account created for {form.username.data}!', 'success')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
