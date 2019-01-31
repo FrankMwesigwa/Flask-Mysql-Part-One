@@ -1,22 +1,8 @@
-from flask import render_template, url_for, flash, redirect, request
-from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccount
-from flaskblog.models import User, Post
-from flask_login import login_user, current_user, logout_user, login_required
+from flask import Blueprint
 
+users = Blueprint('users', __name__) # here we are creating an instance of the blueprint class 
 
-@app.route("/")
-@app.route("/home")
-def home():
-    return render_template('home.html', posts=posts)
-
-
-@app.route("/about") 
-def about():
-    return render_template('about.html', title='About')
-
-
-@app.route("/register", methods=['GET', 'POST'])
+@users.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -31,10 +17,10 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('users.home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -46,12 +32,12 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-@app.route("/logout")
+@users.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('users.home'))
 
-@app.route("/account")
+@users.route("/account")
 @login_required
 def account():
     form = UpdateAccount()
