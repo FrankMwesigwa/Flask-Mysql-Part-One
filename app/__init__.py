@@ -26,6 +26,8 @@ from app import models
 
 from app.home import home
 from app.auth import auth
+from app.admin import admin
 
 app.register_blueprint(home)
 app.register_blueprint(auth)
+app.register_blueprint(admin)
