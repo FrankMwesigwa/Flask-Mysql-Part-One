@@ -6,7 +6,6 @@ from app.auth.forms import LoginForm, RegistrationForm
 from app import db
 from app.models import Employee
 
-
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     """

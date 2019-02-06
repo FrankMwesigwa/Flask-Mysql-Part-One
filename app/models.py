@@ -2,6 +2,11 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login_manager
 
+# Set up user_loader
+@login_manager.user_loader
+def load_user(user_id):
+    return Employee.query.get(int(user_id))
+
 class Employee(UserMixin, db.Model):
     """
     Create an Employee table

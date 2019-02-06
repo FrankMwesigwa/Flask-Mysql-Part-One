@@ -16,12 +16,14 @@ Bootstrap(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
+login_manager = LoginManager()
 
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-login_manager.login_message_category = 'info'
+login_manager.login_message = "You must be logged in to access this page."
+login_manager.login_view = "auth.login"
 
 from app import models
+
 from app.home import home
 from app.auth import auth
 
